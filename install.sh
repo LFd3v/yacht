@@ -54,5 +54,8 @@ tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "${PLUGINS_DIR}"
 "${PLUGINS_DIR}"/tpm/bin/install_plugins || true
 tmux kill-session -t __noop >/dev/null 2>&1 || true
 
+SYSSTAT_DIR="${PLUGINS_DIR}"/tmux-plugin-sysstat/scripts
+[ -d "${SYSSTAT_DIR}" ] && sed -i 's/%.[01]f%%/%2.0f%%/g' "${SYSSTAT_DIR}"/{cpu,mem,swap}.sh || true
+
 printf "OK: Completed\n"
 printf "Please add an alias to TMUX <= 3.2: alias tmux='tmux -f ~/.config/tmux/tmux.conf'\n"
