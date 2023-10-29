@@ -18,28 +18,29 @@ REPODIR="$(
 cd "$REPODIR"
 
 if ! is_app_installed tmux; then
-    printf "ERROR: \"tmux\" not found! \
-        Please install it first\n"
+    printf "ERROR: \"tmux\" not found!\n"
+    printf "       Please install it first.\n"
     exit 1
 fi
 
+TMUX_VERSION=$(tmux -V | awk '{gsub(/[^0-9.]/, "", $2); print ($2+0) * 100}')
 mkdir -p "${PLUGINS_DIR}"
 
 if [ ! -e "${PLUGINS_DIR}/tpm" ]; then
-    printf "WARNING: Cannot find TPM (Tmux Plugin Manager) \
-        at default location: ${PLUGINS_DIR}/tpm.\n"
+    printf "WARNING: Cannot find TPM (Tmux Plugin Manager)\n"
+    printf "         at default location: ${PLUGINS_DIR}/tpm.\n"
     git clone https://github.com/tmux-plugins/tpm "${PLUGINS_DIR}/tpm"
 fi
 
 if [ -e "${HOME}/.tmux.conf" ]; then
-    printf "WARNING: Found existing .tmux.conf file in \$HOME directory.\
-        It will be moved to ${INSTALL_DIR}/tmux/tmux.conf.home\n"
+    printf "WARNING: Found existing .tmux.conf file in \$HOME directory.\n"
+    printf "         It will be moved to ${INSTALL_DIR}/tmux/tmux.conf.home\n"
     mv "${HOME}/.tmux.conf" "${INSTALL_DIR}/tmux/tmux.conf.home" 2>/dev/null || true
 fi
 
 if [ -e "${INSTALL_DIR}/tmux/tmux.conf" ]; then
-    printf "WARNING: Found existing tmux.conf file in ${INSTALL_DIR}/tmux directory.\
-        It will be moved to ${INSTALL_DIR}/tmux/tmux.conf.config\n"
+    printf "WARNING: Found existing tmux.conf file \$HOME/.config/tmux directory.\n"
+    printf "         It will be moved to ${INSTALL_DIR}/tmux/tmux.conf.config\n"
     mv "${INSTALL_DIR}/tmux/tmux.conf" "${INSTALL_DIR}/tmux/tmux.conf.config" 2>/dev/null || true
 fi
 
@@ -58,5 +59,11 @@ tmux kill-session -t __noop >/dev/null 2>&1 || true
 SYSSTAT_DIR="${PLUGINS_DIR}"/tmux-plugin-sysstat/scripts
 [ -d "${SYSSTAT_DIR}" ] && sed -i 's/%.[01]f%%/%2.0f%%/g' "${SYSSTAT_DIR}"/{cpu,mem,swap}.sh || true
 
-printf "OK: Completed\n"
-printf "Please add an alias to TMUX <= 3.2: alias tmux='tmux -f ~/.config/tmux/tmux.conf'\n"
+if [ "$TMUX_VERSION" -le 320 ]; then
+    printf "\nPlease add an alias to your shell (needed for tmux <= 3.2):\n"
+    printf "alias tmux='tmux -f ~/.config/tmux/tmux.conf # works on bash/zsh\n"
+else
+    printf "\ntmux version > 3.20, no alias needed\n"
+fi
+
+printf "\nOK: Completed\n"
