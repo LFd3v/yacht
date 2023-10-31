@@ -7,7 +7,6 @@ tmux set -gw main-pane-height $DEFAULT_HW
 DATE="$(date)"
 SESSIONS="$(tmux ls | wc -l)"
 CS=$(~/.config/tmux/plugins/tmux-continuum/scripts/continuum_status.sh)
-CS=$(~/.config/tmux/plugins/tmux-continuum/scripts/continuum_status.sh)
 [ "$CS" == "off" ] && CI="15" || CI="0"
 [ "$CS" == "off" ] && CM="" || CI="min"
 
