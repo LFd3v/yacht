@@ -2,25 +2,36 @@
 
 DATE="$(date)"
 SESSIONS="$(tmux ls | wc -l)"
-CS=$(~/.config/tmux/plugins/tmux-continuum/scripts/continuum_status.sh)
-[ "$CS" == "off" ] && CI="15" || CI="0"
-[ "$CS" == "off" ] && CM="" || CI="min"
+CS="@continuum-save-interval"
 
-tmux display-menu -T "#[align=centre]Status" -x P -y P \
-    "" \
-    "-#[nodim]$DATE" "" {} \
-    "-#[nodim]#[align=centre]tmux #{version}" "" {} \
-    "" \
-    "-#[nodim]Continuum: ${CS}${CM}" "" {} \
-    "-#[nodim]Mouse: #{?mouse,on,off}" "" {} \
-    "-#[nodim]Session windows: #{session_windows}" "" {} \
-    "-#[nodim]Sessions: $SESSIONS" "" {} \
-    "" \
-    "Choose tree" c "choose-tree -Z" \
-    "Detach" d "confirm-before -p 'detach from session #S? (y/N)' detach" \
-    "display Time" t "run -b -d 0.2 'tmux clock-mode'" \
-    "display Buffers" b "choose-buffer -Z" \
-    "toggle continUum" u "set -g @continuum-save-interval $CI" \
-    "toggle Mouse" m "setw mouse" \
-    "" \
-    "Quit" q "confirm-before -p 'kill-session #S? (y/N)' kill-session"
+MENU=(""
+    "-${DATE}" "" {}
+    "-#[align=centre]tmux #{version}" "" {}
+    ""
+    "-Continuum: #{?#{==:#{${CS}},15},15min,off}" "" {}
+    "-Keep pane: #{?#{==:#{remain-on-exit},on},on,off}" "" {}
+    "-Mouse: #{?mouse,on,off}" "" {}
+    "-Session windows: #{session_windows}" "" {}
+    "-Sessions: ${SESSIONS}" "" {}
+    ""
+    "[P] show Key bindings      " k "list-keys -N"
+    "[P] Toggle clock mode      " t "run -b -d 0.2 -C 'clock-mode'"
+    "[S] toggle Continuum       " c "set -g ${CS} #{?#{==:#{${CS}},15},0,15}"
+    "[W] toggle keep Pane       " p "setw remain-on-exit"
+    "[S] toggle Mouse           " m "setw mouse"
+    "[S] toggle pAne status     " a "setw -g pane-border-status"
+    "[S] toggle Status bar      " s "set status"
+    "[W] toggle sYnchronization " y "setw synchronize-panes"
+    "[S] toggle status Widgets  " w "run -C 'toggle-status-right'"
+    ""
+    "Detach session <P d>       " d "confirm-before -p 'detach from session #S? (y/N)' detach"
+    "Navigate tree <P s>        " n "choose-tree -Z"
+    "show/edit Buffers <P C-b>  " b "choose-buffer -Z"
+    "Quit session <P C-q>       " q "confirm-before -p 'kill-session #S? (y/N)' kill-session")
+
+[ "$1" == "K" ] && tmux display-menu \
+    -T "#[align=centre]Status" -x C -y C "${MENU[@]}" || true
+    
+[ "$1" == "M" ] && tmux display-menu \
+    -O -T "#[align=centre]Status" -x R -y S "${MENU[@]}" || true
+
