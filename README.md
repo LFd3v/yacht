@@ -102,6 +102,8 @@ Finally, you can jump into a new tmux session:
 $ tmux new
 ```
 
+PS: if the status line or your shell prompt looks broken, and you are sure that a font with Powerline support is being used (like a Nerd font, for instance), make sure your locale supports UTF8 and/or start `tmux` with the `-u` flag to force UTF8 support.
+
 ## General settings
 
 Most [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) suggestions are followed, with these changes:
