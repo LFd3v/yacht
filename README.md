@@ -27,7 +27,7 @@ Original Tmux Configuration animation for reference:
 1. [Copy mode](#copy-mode)
 1. [Clipboard integration](#clipboard-integration)
 1. [Themes and customization](#themes-and-customization)
-1. [GUI terminal integration](#GUI-terminal-integration)
+1. [GUI terminal integration](#gui-terminal-integration)
 
 ## Features
 
