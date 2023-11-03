@@ -95,7 +95,6 @@ $ ./tmux-config/install.sh
 - [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) is installed at default location `~/.config/tmux/plugins/tpm`, unless already present
 - required tpm plugins are installed
 - fix the padding of sysstat widgets
-- show a warning if an alias is needed to load the new configuration file (`tmux < 3.2`, configuration probably will not load anyway)
 
 Finally, you can jump into a new tmux session:
 
