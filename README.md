@@ -76,27 +76,26 @@ Original Tmux Configuration animation for reference:
 
 Prerequisites:
 
-- tmux >= "v3.2"
-- Linux (tested on Arch Linux)
-- macOS (not tested, but should work)
-
+- `tmux -V >= 3.2`
+- Linux, tested on Arch Linux (tmux 3.3a) and Ubuntu 22.04 (tmux 3.2a)
+- macOS (not tested, but it should work)
 
 To install tmux-config:
 
 ```
-$ git clone <repo address> # or download and extract a release
+$ git clone <repo address> # or download and extract the code
 $ ./tmux-config/install.sh
 ```
 
-`install.sh` script does following:
+`install.sh` script does the following:
 
-- copies files to `~/.config/tmux` directory
-- existing `~/.tmux.conf` will be moved to '~/.config/tmux/tmux.conf.home`
-- existing `~/.config/tmux/tmux.conf` will be renamed to 'tmux.conf.config`
-- [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) will be installed at default location `~/.config/tmux/plugins/tpm`, unless already present
-- required tmux plugins will be installed
-- fixes the padding of sysstat widgets
-- shows a warning if an alias is needed to load the new configuration file (`tmux <= 3.2`)
+- copy files to `~/.config/tmux` directory
+- existing `~/.tmux.conf` is moved to '~/.config/tmux/tmux.conf.home`
+- existing `~/.config/tmux/tmux.conf` is renamed to 'tmux.conf.config`
+- [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) is installed at default location `~/.config/tmux/plugins/tpm`, unless already present
+- required tpm plugins are installed
+- fix the padding of sysstat widgets
+- show a warning if an alias is needed to load the new configuration file (`tmux < 3.2`, configuration probably will not load anyway)
 
 Finally, you can jump into a new tmux session:
 
