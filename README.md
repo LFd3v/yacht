@@ -30,37 +30,37 @@ Original Tmux Configuration animation for reference:
 
 ## Features
 
-- "C-a" `<prefix>` instead of "C-b" (screen like, easier to use with one hand)
+- "C-a" `<prefix>` instead of "C-b" (`screen` like, easier to use with one hand)
 - follow [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) (with a few minor changes) 
-- support for nested tmux sessions (local = top bar / nested = bottom bar)
-- local vs remote specific session configuration (custom configuration applied to ssh sessions)
+- support for nested tmux sessions (local -> top bar / nested -> bottom bar)
+- local vs remote specific session configuration (custom configuration applied to `ssh` sessions)
 - scroll and copy mode improvements
 - integration with OSX or Linux clipboard (works for local, remote, and local+remote nested session scenario)
 - supercharged status line
 - renew tmux and shell environment (SSH_AUTH_SOCK, DISPLAY, SSH_TTY) when reattaching back to old session
 - newly created windows and panes retain current working directory
 - monitor windows for activity/silence
-- highlight focused pane
+- highlight focused pane, with toggle for pane status
 - merge current session with existing one (move all windows)
 - configurable visual theme/colors, with some elements borrowed from [Powerline](https://github.com/powerline/powerline)
 - integration with 3rd party plugins: [tmux-battery](https://github.com/tmux-plugins/tmux-battery),[tmux-prefix-highlight](https://github.com/tmux-plugins/tmux-prefix-highlight), [tmux-online-status](https://github.com/tmux-plugins/tmux-online-status), [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect), [tmux-continuum](https://github.com/tmux-plugins/tmux-continnum), [tmux-copycat](https://github.com/tmux-plugins/tmux-copycat), [tmux-open](https://github.com/tmux-plugins/tmux-open), [tmux-plugin-sysstat](https://github.com/samoshkin/tmux-plugin-sysstat), [t-smart-tmux-session-manager](https://github.com/joshmedeski/t-smart-tmux-session-manager), [tmux-plugin-sysstat](https://github.com/samoshkin/tmux-plugin-sysstat)
-- all keybindins are listed in the "List key bindings" screen
-- **Status Menu** with system info and some commands/toggles
+- all key bindings are listed in the "List key bindings" screen (do not include plugins, please refer to their documentation if needed)
+- **Status Menu** with system info and some commonly used commands and toggles
 - most stock key bindings still work as default, the most common ones can be used without `<prefix>`
 - double-clicking empty area of the status bar creates a new window
-- all key bindings can be disabled (OFF mode) when using a nested sessions (ssh, ect) of if a key binding conflicts
-- Initial window is configured to use `main-vertial` layout, which can be applied to new windows with a key-binding, as well as new panes follow the current layout (but this can be overriden with custom key bindings as well)
-- resurrect and continuum plugins configured properly, also save/restore pane buffer, with visble status via menu and confurable in the main `tmux.conf`
+- all key bindings can be disabled (OFF mode) when using a nested sessions (`ssh`, ect) or if a key binding conflicts
+- Initial window is configured to use `main-vertial` layout with 60% width (`main-horizontal` also set o 60% height), which can be applied to new windows with a key-binding, as well as new panes follow the current layout (this can be overriden with custom key bindings, and the default layout and width/height easily changed in `tmux.conf` as well)
+- resurrect and continuum plugins configured properly, save/restore pane buffer enabled, with visble status via **Stautus Menu** and configurable in the main `tmux.conf`
 - `tmux.conf` is completely documented, so it should be easy to change the default settings or customize it even further
 
 **Status line widgets**:
 
 - CPU, memory and swap usage (sysstat widgets)
 - battery information
-- username and hostname, current date time
-- visual indicator when you press `<prefix>`
-- visual indicator when you're in `Copy` mode
-- visual indicator when you're in `Synchronization` mode
+- username (`root` aware) and hostname, current date and time
+- visual indicator when `<prefix>` is pressed
+- visual indicator when `Copy` mode is active
+- visual indicator when `Synchronization` mode is active
 - visual indicator when pane is zoomed
 - visual indicator when main sessions is locked (OFF mode)
 - online/offline visual indicator
@@ -103,34 +103,24 @@ $ tmux new
 
 ## General settings
 
-Most [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) suggestions are followed, execpt:
+Most [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) suggestions are followed, with these changes:
 - `display-time 2000`               # ststus messages display time duration = 2s
 - `status-interval 3`               # status bar update interval = 3s
 - `default-terminal tmux-256color`  # instead of screen-256color
 - `status-keys` will follow your $EDITOR / $VISUAL environment variable, like stock `tmux`
-- reload tmux configuration file is mapped to `C-r`
+- reload tmux configuration file is mapped to `<prefix> C-r`
 
+Other default configuration, as suggested byt [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) or not:
 - Windows and pane indexing starts from `1` rather than `0`
 - Scrollback history limit is set to `50000`
 - Aggresive resizing is on
-- Message line display timeout is `2s`
 - Mouse support in `on`.
 - `escape-time` is `0` to avoid problems with programs like vim/neovim that use ESC key
 - Focus application events is enabled
-- Detach on destroy is disabled (exit to next session, if available)
+- Detach on destroy is disabled (instead of exiting, attach to next session, if available)
 
 256 color palette support is turned on, make sure that your parent terminal is configured propertly. See [here](https://unix.stackexchange.com/questions/1045/getting-256-colors-to-work-in-tmux) and [there](https://github.com/tmux/tmux/wiki/FAQ)
 
-```
-# parent terminal
-$ echo $TERM
-xterm-256color
-
-# jump into a tmux session
-$ tmux new
-$ echo $TERM
-screen-256color
-```
 
 ## Key bindings
 
@@ -167,6 +157,10 @@ The most used ones were added as default so the basic funcionality is available 
         <td nowrap><code>C-Tab</code></td>
         <td>Go to most recent used window</td>
     </tr>
+    <tr>
+        <td nowrap><code>C-S-Up</code></td>
+        <td>Enter Copy mode, PageDown to the very bottom cancels it</td>
+    </tr>
 </table>
 
 These key bindings can be mapped to your GUI terminal keys of choice, but this needs to be done manually. See [GUI terminal integration](#GUI-terminalintegration) section below.
@@ -175,11 +169,11 @@ These key bindings can be mapped to your GUI terminal keys of choice, but this n
 
 Window tabs use Powerline arrows glyphs, so you need to install Powerline enabled font to make this work. See [Powerline docs](https://powerline.readthedocs.io/en/latest/installation.html#fonts-installation) for instructions and here is the [collection of patched fonts for powerline users](https://github.com/powerline/fonts). Your preferred [Nerd font](https://github.com/ryanoasis/nerd-fonts) should work as well.
 
-Most modes, like Copy, Synchronization and Zoom have visual indicators. You might want to hide status bar using `<prefix> C-t` keybinding, or use the **Status Menu** to toggle some CPU intensive widgets on/off.
+Most modes, like Copy, Synchronization and Zoom have visual indicators. You might want to hide the status bar using `<prefix> C-t` keybinding, or use the **Status Menu** to toggle some (somewhat CPU intensive widgets) on/off.
 
 ## Nested tmux sessions
 
-When in outer session, simply press `F12` to toggle off all keybindings handling in outer session. Now work with inner session using the same keybinding scheme and same keyprefix. Press `F12` to turn on outer session back.
+When in outer session, simply press `F12` to toggle off all keybindings handling in the outer session. Now work with inner session using the same keybinding scheme and same keyprefix. Press `F12` to turn on outer session back.
 
 You might notice that when key bindings are "OFF", special `[OFF]` visual indicator is shown in the status line, and status line changes its style (colored to gray).
 
@@ -196,20 +190,22 @@ You can apply remote-specific settings by extending `~/.config/tmux/.tmux.remote
 
 There are some tweaks to copy mode and scrolling behavior, you should be aware of.
 
-There is a root keybinding to enter Copy mode: `M-Up`. Once in copy mode, you have several scroll controls:
+There is a root keybinding to enter Copy mode: `C-S-Up`. Once in copy mode, you have several scroll controls:
 
 - scroll by line: `M-Up`, `M-down`
 - scroll by half screen: `M-PageUp`, `M-PageDown`
 - scroll by whole screen: `PageUp`, `PageDown`
 - scroll by mouse wheel, scroll step is changed from `5` lines to `2`
 
-`Space` starts selection, `Enter` copies selection and exits copy mode. List all items in copy buffer using `prefix C-p`, and paste most recent item from buffer using `prexix p`.
+`Space` starts selection, `Enter` copies selection and exits copy mode. List all items in copy buffer using `<prefix> C-b`, and paste most recent item from buffer using `<prefix> p`.
 
-`y` just copies selected text and is equivalent to `Enter`, `Y` copies whole line, and `D` copies by the end of line.
+`y` just copies selected text and is equivalent to `Enter`, `Y` copies whole line, and `D` copies by the end of line. Like most modes, pressing `Q` will cancel and exit the mode.
 
-Also, note, that when text is copied any trailing new lines are stripped. So, when you paste buffer in a command prompt, it will not be immediately executed.
+Other features are available via [tmux-copycat](https://github.com/tmux-plugins/tmux-copycat) and [tmux-open](https://github.com/tmux-plugins/tmux-open) plugins, please refer to their documentation.
 
-You can also select text using mouse. Default behavior is to copy text and immediately cancel copy mode on `MouseDragEnd` event. This is annoying, because sometimes I select text just to highlight it, but tmux drops me out of copy mode and reset scroll by the end. I've changed this behavior, so `MouseDragEnd` does not execute `copy-selection-and-cancel` action. Text is copied, but copy mode is not cancelled and selection is not cleared. You can then reset selection by mouse click.
+Also, note that when text is copied any trailing new lines are stripped. So, when you paste buffer in a command prompt, it will not be immediately executed.
+
+You can also select text using mouse. Default behavior is to copy text and immediately cancel copy mode on `MouseDragEnd` event. This is annoying, because sometimes I select text just to highlight it, but `tmux` drops me out of copy mode and reset scroll by the end. So this behavior was changed: `MouseDragEnd` does not execute `copy-selection-and-cancel` action. Text is copied, but copy mode is not cancelled and selection is not cleared. You can then reset selection by a single mouse click.
 
 ## Clipboard integration
 
@@ -221,7 +217,7 @@ All colors related to theme are declared as variables. You can change them in `~
 
 ## GUI terminal integration
 
-You can follow these guides in order to make your preferred GUI terminal keybings work with `tmux`:
+These guides will help in order to make your preferred GUI terminal keybings work with `tmux`:
 
 - [iTerm2](https://github.com/samoshkin/tmux-config#iterm2-and-tmux-integration)
 - [Alacritty, Kitty, WezTerm](https://github.com/joshmedeski/t-smart-tmux-session-manager#bonus-macos-keyboard-shortcut)
