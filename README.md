@@ -1,6 +1,6 @@
 # Y.A.C.H.T - Yet Another Configuration Handler (for) Tmux
 
-Supercharged and customizable configuration your [tmux](https://tmux.github.io/) that aims to appeal to power users while still being beginner friendly.
+Supercharged and customizable [tmux](https://tmux.github.io/) configuration that aims to appeal to power users while still being beginner friendly.
 
 It is vastly based on these projects:
 - [Tmux Configuration](https://github.com/samoshkin/tmux-config)
