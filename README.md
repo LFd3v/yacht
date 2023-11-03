@@ -22,6 +22,7 @@ Original Tmux Configuration animation for reference:
 1. [General settings](#general-settings)
 1. [Key bindings](#key-bindings)
 1. [Status line](#status-line)
+1. [Status menu](#status-menu)
 1. [Nested tmux sessions](#nested-tmux-sessions)
 1. [Copy mode](#copy-mode)
 1. [Clipboard integration](#clipboard-integration)
@@ -172,6 +173,10 @@ These key bindings can be mapped to your GUI terminal keys of choice, but this n
 Window tabs use Powerline arrows glyphs, so you need to install Powerline enabled font to make this work. See [Powerline docs](https://powerline.readthedocs.io/en/latest/installation.html#fonts-installation) for instructions and here is the [collection of patched fonts for powerline users](https://github.com/powerline/fonts). Your preferred [Nerd font](https://github.com/ryanoasis/nerd-fonts) should work as well.
 
 Most modes, like Copy, Synchronization and Zoom have visual indicators. You might want to hide the status bar using `<prefix> C-t` keybinding, or use the **Status Menu** to toggle some (somewhat CPU intensive widgets) on/off.
+
+## Status menu
+
+Using `<prefix> Home` will display handy menu with some configurartion options and toggles. This is also available via a click with the secondary mouse button on the right area of the status bar. Some options affect only the [P]ane, [W]indow or the whole [S]ession, and the associated key binding is also visible.
 
 ## Nested tmux sessions
 
