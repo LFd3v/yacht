@@ -112,7 +112,7 @@ Most [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) suggestions 
 - `status-keys` will follow your $EDITOR / $VISUAL environment variable, like stock `tmux`
 - reload tmux configuration file is mapped to `<prefix> C-r`
 
-Other default configuration, as suggested byt [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) or not:
+Other default configuration, as suggested by [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) or not:
 - Windows and pane indexing starts from `1` rather than `0`
 - Scrollback history limit is set to `50000`
 - Aggresive resizing is on
