@@ -18,12 +18,19 @@ REPODIR="$(
 cd "$REPODIR"
 
 if ! is_app_installed tmux; then
-    printf "ERROR: \"tmux\" not found!\n"
+    printf "ERROR: \"tmux\" not found\!\n"
     printf "       Please install it first.\n"
     exit 1
 fi
 
 TMUX_VERSION=$(tmux -V | awk '{gsub(/[^0-9.]/, "", $2); print ($2+0) * 100}')
+
+if [ "$TMUX_VERSION" -lt 320 ]; then
+    printf "ERROR: $(tmux -V) not supported\!\n"
+    printf "       Please install version tmux 3.2 or newer first.\n"
+    exit 1
+fi
+
 mkdir -p "${PLUGINS_DIR}"
 
 if [ ! -e "${PLUGINS_DIR}/tpm" ]; then
@@ -58,12 +65,5 @@ tmux kill-session -t __noop >/dev/null 2>&1 || true
 # Fix percetange stats padding in status bar
 SYSSTAT_DIR="${PLUGINS_DIR}"/tmux-plugin-sysstat/scripts
 [ -d "${SYSSTAT_DIR}" ] && sed -i 's/%.[01]f%%/%2.0f%%/g' "${SYSSTAT_DIR}"/{cpu,mem,swap}.sh || true
-
-if [ "$TMUX_VERSION" -le 320 ]; then
-    printf "\nPlease add an alias to your shell (needed for tmux <= 3.2):\n"
-    printf "alias tmux='tmux -f ~/.config/tmux/tmux.conf # works on bash/zsh\n"
-else
-    printf "\ntmux version > 3.20, no alias needed\n"
-fi
 
 printf "\nOK: Completed\n"
