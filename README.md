@@ -239,7 +239,7 @@ These guides will help in order to make your preferred GUI terminal keybings wor
 
 - [iTerm2](https://github.com/samoshkin/tmux-config#iterm2-and-tmux-integration)
 - [Alacritty, Kitty, WezTerm](https://github.com/joshmedeski/t-smart-tmux-session-manager#bonus-macos-keyboard-shortcut)
-- [foot](https://codeberg.org/dnkl/foot/src/commit/ca46edfe6f72816c727e3a37476126904807d0bf/foot.ini#L208) (`text-bindings` in documentation)
+- [foot](https://codeberg.org/dnkl/foot/src/commit/ca46edfe6f72816c727e3a37476126904807d0bf/doc/foot.ini.5.scd#L1053) (_text-bindings_ in `foot.ini(5)`)
 
 
 Original Tmux Configuration screenshot for reference:
