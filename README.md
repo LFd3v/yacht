@@ -52,7 +52,7 @@ Original Tmux Configuration animation for reference:
 - double-clicking empty area of the status bar creates a new window
 - all key bindings can be disabled (OFF mode) when using a nested sessions (`ssh`, ect) or if a key binding conflicts
 - Initial window is configured to use `main-vertial` layout with 60% width (`main-horizontal` also set o 60% height), which can be applied to new windows with a key-binding, as well as new panes follow the current layout (this can be overriden with custom key bindings, and the default layout and width/height easily changed in `tmux.conf` as well)
-- resurrect and continuum plugins configured properly, save/restore pane buffer enabled, with visble status via **Stautus Menu** and configurable in the main `tmux.conf`
+- resurrect and continuum plugins configured properly, save/restore pane buffer enabled, visible status via **Stautus Menu**, `<prefix> C-s` saves the session and `<prefix> C-r` restores it, auto-restore and auto-save can be configured in the main `tmux.conf`
 - `tmux.conf` is completely documented, so it should be easy to change the default settings or customize it even further
 
 **Status line widgets**:
