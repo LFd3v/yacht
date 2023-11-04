@@ -59,7 +59,7 @@ Original Tmux Configuration animation for reference:
 
 - CPU, memory and swap usage (sysstat widgets)
 - battery information
-- username (`root` aware) and hostname, current date and time
+- username (`root` aware, thanks to [this](https://superuser.com/a/1506359)) and hostname, current date and time
 - visual indicator when `<prefix>` is pressed
 - visual indicator when `Copy` mode is active
 - visual indicator when `Synchronization` mode is active
