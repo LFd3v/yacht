@@ -19,6 +19,7 @@ Original Tmux Configuration animation for reference:
 
 1. [Features](#features)
 1. [Installation](#installation)
+1. [Suggested shell configuration](#suggested-shell-configuration)
 1. [General settings](#general-settings)
 1. [Key bindings](#key-bindings)
 1. [Status line](#status-line)
@@ -104,6 +105,16 @@ $ tmux new
 
 PS: if the status line or your shell prompt looks broken, and you are sure that a font with Powerline support is being used (like a Nerd font, for instance), make sure your locale supports UTF8 and/or start `tmux` with the `-u` flag to force UTF8 support.
 
+## Suggested shell configuration
+
+Recent versions of `fzf` can use `tmux` menus to show its search results, add something like this to the environment variables (more info [here](https://www.joshmedeski.com/posts/popup-history-with-tmux-and-fzf)):
+
+`export FZF_TMUX_OPTS="-p 60%,70%"`
+
+And in order to display useful info in the pane status when it is enabled, make sure prompt `precmd` has something like this:
+
+`printf "\033]0;%s@%s:%s\007" "${USER}" "${${HOSTNAME:-$HOST}%%.*}" "${PWD/#$HOME/~}"`
+
 ## General settings
 
 Most [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) suggestions are followed, with these changes:
@@ -172,7 +183,7 @@ These key bindings can be mapped to your GUI terminal keys of choice, but this n
 
 Window tabs use Powerline arrows glyphs, so you need to install Powerline enabled font to make this work. See [Powerline docs](https://powerline.readthedocs.io/en/latest/installation.html#fonts-installation) for instructions and here is the [collection of patched fonts for powerline users](https://github.com/powerline/fonts). Your preferred [Nerd font](https://github.com/ryanoasis/nerd-fonts) should work as well.
 
-Most modes, like Copy, Synchronization and Zoom have visual indicators. You might want to hide the status bar using `<prefix> C-t` keybinding, or use the **Status Menu** to toggle some (somewhat CPU intensive widgets) on/off.
+Most modes, like Copy, Synchronization and Zoom have visual indicators. Status bar can be hidden using `<prefix> C-t` key binding, or use the **Status Menu** to toggle some (somewhat CPU intensive widgets) on/off.
 
 ## Status menu
 
@@ -184,7 +195,7 @@ When in outer session, simply press `F12` to toggle off all keybindings handling
 
 You might notice that when key bindings are "OFF", special `[OFF]` visual indicator is shown in the status line, and status line changes its style (colored to gray).
 
-### Local and remote sessions
+## Local and remote sessions
 
 Remote session is detected by existence of `$SSH_CLIENT` variable. When session is remote, following changes are applied:
 
