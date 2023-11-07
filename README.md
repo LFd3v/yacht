@@ -81,11 +81,11 @@ Prerequisites:
 - Linux, tested on Arch Linux (tmux 3.3a) and Ubuntu 22.04 (tmux 3.2a)
 - macOS (not tested, but it should work)
 
-To install tmux-config:
+To install YACHT:
 
 ```
 $ git clone <repo address> # or download and extract the code
-$ ./tmux-config/install.sh
+$ ./yacht/install.sh
 ```
 
 `install.sh` script does the following:
